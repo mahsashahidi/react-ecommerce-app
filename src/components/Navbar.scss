@@ -1,0 +1,11 @@
+.overlay {
+  animation: slidedown 0.7s ease;
+}
+@keyframes slidedown {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
