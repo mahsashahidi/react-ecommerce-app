@@ -3,7 +3,7 @@ import { useState } from "react";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { addProduct } from "../redux/cartRedux";
+import { addProduct } from "../redux/cartReducer";
 import { useDispatch } from "react-redux";
 import { TiShoppingCart } from "react-icons/ti";
 import { HiOutlineHeart } from "react-icons/hi";
@@ -12,6 +12,7 @@ import useFetch from "../customHooks/useFetch";
 
 export default function Product() {
   const id = useParams().id;
+
   const [selectedImg, setSelectedImg] = useState(0);
 
   const [quant, setQuant] = useState(1);
@@ -19,21 +20,6 @@ export default function Product() {
   const { data, loading, error } = useFetch(`/products/${id}?populate=*`);
 
   const dispatch = useDispatch();
-  const handleClick = () => {
-    // add color and size with fake api data
-    dispatch(
-      addProduct({
-        id: data.attributes.id,
-        title: data.attributes.title,
-        desc: data.attributes.desc,
-        img:
-          process.env.REACT_APP_UPLOAD_URL +
-          data?.attributes?.img1?.data?.attributes?.url,
-        price: data.attributes.price,
-        quant,
-      })
-    );
-  };
 
   return (
     <div className="overflow-x-hidden">
@@ -130,7 +116,18 @@ export default function Product() {
               </div>
               <button
                 className="font-medium h-10 flex flex-row basis-3/6 gap-1.5 justify-center items-center py-2 bg-orange-300 hover:bg-orange-400 transition duration-500 text-white"
-                onClick={handleClick}
+                onClick={() =>
+                  dispatch(
+                    addProduct({
+                      id: data.id,
+                      title: data.attributes.title,
+                      desc: data.attributes.desc,
+                      img: data?.attributes?.img1?.data?.attributes?.url,
+                      price: data.attributes.price,
+                      quant,
+                    })
+                  )
+                }
               >
                 <TiShoppingCart size="22px" /> ADD TO CART
               </button>

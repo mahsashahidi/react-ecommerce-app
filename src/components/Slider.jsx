@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { TfiAngleRight, TfiAngleLeft } from "react-icons/tfi";
 import { sliderItems } from "../data";
 import { Link } from "react-router-dom";
+import useFetch from "../customHooks/useFetch";
 
 export default function Slider() {
   let [currentSlide, setSlide] = useState(0);
+  const { data, loading, error } = useFetch(`/categories`);
 
   const prevSlide = () => {
     setSlide(currentSlide === 0 ? 2 : currentSlide - 1);
@@ -32,7 +34,7 @@ export default function Slider() {
             Have a glowing body with cruelty-free organic Hygiene and skin care
             products
           </h3>
-          <Link to="/products/2">
+          <Link to={`/products/${data[5]?.attributes?.title}`}>
             <button className="py-5 w-44 p-5 bg-black text-white rounded-xl">
               Browse Collection
             </button>
@@ -51,7 +53,7 @@ export default function Slider() {
             Enjoy a zero waste life and cook hearty dishes with sustainable
             kitchen utensils
           </h3>
-          <Link to="/products/1">
+          <Link to={`/products/${data[0]?.attributes?.title}`}>
             <button className="py-5 w-44 p-5 bg-black text-white rounded-xl">
               Browse Collection
             </button>
@@ -69,7 +71,7 @@ export default function Slider() {
           <h3 className="pb-5 text-white font-bold text-lg lg:text-xl z-index-3">
             Create your ever green garden
           </h3>
-          <Link to="/products/6">
+          <Link to={`/products/${data[4]?.attributes?.title}`}>
             <button className="py-5 w-44 p-5 bg-black text-white rounded-xl">
               Browse Collection
             </button>

@@ -15,7 +15,7 @@ export default function Products() {
   const [selectedCats, setSelectedCats] = useState([]);
   let [sort, setSort] = useState("desc");
   const { data, loading, error } = useFetch(
-    `/products?[filters][categories][title][$eq]=Gardening`
+    `/products?[filters][categories][title][$eq]=${catName}`
   );
 
   const handleCats = (e) => {

@@ -1,11 +1,12 @@
 import React from "react";
 import { UilTrashAlt } from "@iconscout/react-unicons";
 import { useSelector } from "react-redux";
-import { removeItem, resetCart } from "../redux/cartRedux";
+import { removeItem, resetCart } from "../redux/cartReducer";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Cart() {
+  // state is in our store file
   const cart = useSelector((state) => state.cart.products);
   const dispatch = useDispatch();
   const totalPrice = () => {
@@ -22,7 +23,11 @@ export default function Cart() {
         <div>
           <div className="flex flex-row mb-7 gap-5 items-center" key={item.id}>
             <div className="left flex basis-1/5">
-              <img src={item.img1} alt="" className="w-20 h-24 object-cover" />
+              <img
+                src={process.env.REACT_APP_UPLOAD_URL + item.img}
+                alt=""
+                className="w-20 h-24 object-cover"
+              />
             </div>
 
             <div className="flex flex-col ">
