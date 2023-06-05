@@ -1,14 +1,33 @@
 import React from "react";
 import List from "../components/List";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import useFetch from "../customHooks/useFetch";
 
 export default function Products() {
-  const catId = parseInt(useParams().id);
-  let [maxPrice, setMaxprice] = useState(1000);
+  let [maxPrice, setMaxprice] = useState(70);
+  const location = useLocation();
+  const catName = location.pathname.split("/")[2];
+  // const [activeFilters, setActiveFilters] = useState(new Set().add(catName));
+  const [selectedCats, setSelectedCats] = useState([]);
+  let [sort, setSort] = useState("desc");
+  const { data, loading, error } = useFetch(
+    `/products?[filters][categories][title][$eq]=Gardening`
+  );
+
+  const handleCats = (e) => {
+    const value = e.target.value;
+    const isChecked = e.target.checked;
+
+    setSelectedCats(
+      isChecked
+        ? [...selectedCats, value]
+        : selectedCats.filter((item) => item !== value)
+    );
+  };
   return (
     <div className="overflow-x-hidden">
       <Navbar />
@@ -16,17 +35,18 @@ export default function Products() {
         <div className="left md:basis-2/6 lg:basis-1/6 text-left md:sticky	top-24 h-full">
           <div>
             <h3 className="mb-4 font-semibold">Filter by Category</h3>
-            <ul className="flex flex-wrap w-full gap-1 ">
+            <ul className="flex flex-wrap w-full gap-1 " name="categories">
               <li>
                 <input
                   type="checkbox"
-                  id="home"
-                  value=""
+                  id="Home"
+                  value="Home"
                   className="hidden peer"
                   required=""
+                  onChange={handleCats}
                 />
                 <label
-                  for="home"
+                  for="Home"
                   className="inline-flex w-full px-1 py-3 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-orange-300 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-orange-50 peer-checked:bg-orange-200"
                 >
                   <div className="block">
@@ -37,12 +57,13 @@ export default function Products() {
               <li>
                 <input
                   type="checkbox"
-                  id="hygiene"
-                  value=""
+                  id="Hygiene"
+                  value="Hygiene"
                   className="hidden peer"
+                  onChange={handleCats}
                 />
                 <label
-                  for="hygiene"
+                  for="Hygiene"
                   className="inline-flex w-full px-1 py-3 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-orange-300 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-orange-50 peer-checked:bg-orange-200"
                 >
                   <div className="block">
@@ -53,12 +74,13 @@ export default function Products() {
               <li>
                 <input
                   type="checkbox"
-                  id="makeup"
-                  value=""
+                  id="Makeup"
+                  value="Makeup"
                   className="hidden peer"
+                  onChange={handleCats}
                 />
                 <label
-                  for="makeup"
+                  for="Makeup"
                   className="inline-flex w-full px-1 py-3 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-orange-300 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-orange-50 peer-checked:bg-orange-200"
                 >
                   <div className="block">
@@ -69,12 +91,13 @@ export default function Products() {
               <li>
                 <input
                   type="checkbox"
-                  id="fashion"
-                  value=""
+                  id="Fashion"
+                  value="Fashion"
                   className="hidden peer"
+                  onChange={handleCats}
                 />
                 <label
-                  for="fashion"
+                  for="Fashion"
                   className="inline-flex w-full px-1 py-3 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-orange-300 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-orange-50 peer-checked:bg-orange-200"
                 >
                   <div className="block">
@@ -85,12 +108,13 @@ export default function Products() {
               <li>
                 <input
                   type="checkbox"
-                  id="bags"
-                  value=""
+                  id="Tote-bags"
+                  value="Tote-bags"
                   className="hidden peer"
+                  onChange={handleCats}
                 />
                 <label
-                  for="bags"
+                  for="Tote-bags"
                   className="inline-flex w-full px-1 py-3 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-orange-300 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-orange-50 peer-checked:bg-orange-200"
                 >
                   <div className="block">
@@ -101,12 +125,13 @@ export default function Products() {
               <li>
                 <input
                   type="checkbox"
-                  id="gardening"
-                  value=""
+                  id="Gardening"
+                  value="Gardening"
                   className="hidden peer"
+                  onChange={handleCats}
                 />
                 <label
-                  for="gardening"
+                  for="Gardening"
                   className="inline-flex w-full px-1 py-3 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-orange-300 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-orange-50 peer-checked:bg-orange-200"
                 >
                   <div className="block">
@@ -127,7 +152,7 @@ export default function Products() {
                 type="range"
                 className="accent-orange-300"
                 min={0}
-                max={1000}
+                max={70}
                 onChange={(e) => setMaxprice(e.target.value)}
               />
 
@@ -138,9 +163,13 @@ export default function Products() {
             Sort by Price
           </label>
           <div className="border-2 rounded w-fit mt-4">
-            <select name="price" id="price">
-              <option value="low">Lowest first</option>
-              <option value="high">Highest first</option>
+            <select
+              name="price"
+              id="price"
+              onChange={(e) => setSort(e.target.value)}
+            >
+              <option value="asc">Lowest first</option>
+              <option value="desc">Highest first</option>
             </select>
           </div>
         </div>
@@ -150,7 +179,12 @@ export default function Products() {
             alt=""
             className="w-full hidden md:block md:h-72 object-cover mb-12"
           />
-          <List catId={catId} />
+          <List
+            catName={catName}
+            selectedCats={selectedCats}
+            sorting={sort}
+            maxprice={maxPrice}
+          />
         </div>
       </div>
       <Contact />
