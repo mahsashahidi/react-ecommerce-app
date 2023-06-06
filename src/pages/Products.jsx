@@ -18,10 +18,17 @@ export default function Products() {
     `/products?[filters][categories][title][$eq]=${catName}`
   );
 
+  const cats = ["Home", "Hygiene", "Makeup", "Fashion", "Bags", "Gardening"];
+  let catTitle = catName;
+  if (catTitle === "Tote-bag") {
+    catTitle = "Bags";
+  }
   const handleCats = (e) => {
-    const value = e.target.value;
+    let value = e.target.value;
     const isChecked = e.target.checked;
-
+    if (value === "Bags") {
+      value = "Tote-bag";
+    }
     setSelectedCats(
       isChecked
         ? [...selectedCats, value]
@@ -36,111 +43,41 @@ export default function Products() {
           <div>
             <h3 className="mb-4 font-semibold">Filter by Category</h3>
             <ul className="flex flex-wrap w-full gap-1 " name="categories">
-              <li>
-                <input
-                  type="checkbox"
-                  id="Home"
-                  value="Home"
-                  className="hidden peer"
-                  required=""
-                  onChange={handleCats}
-                />
-                <label
-                  for="Home"
-                  className="inline-flex w-full px-1 py-3 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-orange-300 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-orange-50 peer-checked:bg-orange-200"
-                >
-                  <div className="block">
-                    <div className="w-full text-sm font-semibold">Home</div>
-                  </div>
-                </label>
-              </li>
-              <li>
-                <input
-                  type="checkbox"
-                  id="Hygiene"
-                  value="Hygiene"
-                  className="hidden peer"
-                  onChange={handleCats}
-                />
-                <label
-                  for="Hygiene"
-                  className="inline-flex w-full px-1 py-3 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-orange-300 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-orange-50 peer-checked:bg-orange-200"
-                >
-                  <div className="block">
-                    <div className="w-full text-sm font-semibold">Hygiene</div>
-                  </div>
-                </label>
-              </li>
-              <li>
-                <input
-                  type="checkbox"
-                  id="Makeup"
-                  value="Makeup"
-                  className="hidden peer"
-                  onChange={handleCats}
-                />
-                <label
-                  for="Makeup"
-                  className="inline-flex w-full px-1 py-3 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-orange-300 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-orange-50 peer-checked:bg-orange-200"
-                >
-                  <div className="block">
-                    <div className="w-full text-sm font-semibold">Makeup</div>
-                  </div>
-                </label>
-              </li>
-              <li>
-                <input
-                  type="checkbox"
-                  id="Fashion"
-                  value="Fashion"
-                  className="hidden peer"
-                  onChange={handleCats}
-                />
-                <label
-                  for="Fashion"
-                  className="inline-flex w-full px-1 py-3 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-orange-300 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-orange-50 peer-checked:bg-orange-200"
-                >
-                  <div className="block">
-                    <div className="w-full text-sm font-semibold">Fashion</div>
-                  </div>
-                </label>
-              </li>
-              <li>
-                <input
-                  type="checkbox"
-                  id="Tote-bags"
-                  value="Tote-bags"
-                  className="hidden peer"
-                  onChange={handleCats}
-                />
-                <label
-                  for="Tote-bags"
-                  className="inline-flex w-full px-1 py-3 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-orange-300 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-orange-50 peer-checked:bg-orange-200"
-                >
-                  <div className="block">
-                    <div className="w-full text-sm font-semibold">Bags</div>
-                  </div>
-                </label>
-              </li>
-              <li>
-                <input
-                  type="checkbox"
-                  id="Gardening"
-                  value="Gardening"
-                  className="hidden peer"
-                  onChange={handleCats}
-                />
-                <label
-                  for="Gardening"
-                  className="inline-flex w-full px-1 py-3 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-orange-300 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-orange-50 peer-checked:bg-orange-200"
-                >
-                  <div className="block">
-                    <div className="w-full text-sm font-semibold">
-                      Gardening
-                    </div>
-                  </div>
-                </label>
-              </li>
+              {cats.map((item) => (
+                <li key={item.id}>
+                  <input
+                    type="checkbox"
+                    id={item}
+                    value={item}
+                    className="hidden peer"
+                    required=""
+                    onChange={handleCats}
+                  />
+                  {item === catTitle ? (
+                    <label
+                      for={item}
+                      className="inline-flex w-full px-1 py-3 bg-orange-200 border-2 border-orange-300 rounded-lg cursor-pointer  text-gray-600"
+                    >
+                      <div className="block">
+                        <div className="w-full text-sm font-semibold">
+                          {item}
+                        </div>
+                      </div>
+                    </label>
+                  ) : (
+                    <label
+                      for={item}
+                      className="inline-flex w-full px-1 py-3 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-orange-300 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-orange-50 peer-checked:bg-orange-200"
+                    >
+                      <div className="block">
+                        <div className="w-full text-sm font-semibold">
+                          {item}
+                        </div>
+                      </div>
+                    </label>
+                  )}
+                </li>
+              ))}
             </ul>
           </div>
 
