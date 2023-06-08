@@ -5,18 +5,14 @@ import { useState } from "react";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import useFetch from "../customHooks/useFetch";
 
 export default function Products() {
-  let [maxPrice, setMaxprice] = useState(70);
+  let [maxPrice, setMaxprice] = useState(100);
   const location = useLocation();
   const catName = location.pathname.split("/")[2];
   // const [activeFilters, setActiveFilters] = useState(new Set().add(catName));
   const [selectedCats, setSelectedCats] = useState([]);
   let [sort, setSort] = useState("desc");
-  const { data, loading, error } = useFetch(
-    `/products?[filters][categories][title][$eq]=${catName}`
-  );
 
   const cats = ["Home", "Hygiene", "Makeup", "Fashion", "Bags", "Gardening"];
   let catTitle = catName;
@@ -35,6 +31,7 @@ export default function Products() {
         : selectedCats.filter((item) => item !== value)
     );
   };
+
   return (
     <div className="overflow-x-hidden">
       <Navbar />
@@ -89,7 +86,7 @@ export default function Products() {
                 type="range"
                 className="accent-orange-300"
                 min={0}
-                max={70}
+                max={100}
                 onChange={(e) => setMaxprice(e.target.value)}
               />
 
@@ -112,7 +109,7 @@ export default function Products() {
         </div>
         <div className="right md:basis-4/6 lg:basis-5/6">
           <img
-            src="/images/home-header.jpg"
+            src="/images/home-header.webp"
             alt=""
             className="w-full hidden md:block md:h-72 object-cover mb-12"
           />

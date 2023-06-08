@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { category } from "../data";
 import { SiFacebook, SiTwitter, SiInstagram } from "react-icons/si";
 import {
   HiOutlinePhone,
@@ -25,22 +25,24 @@ export default function Footer() {
           <div className="Categories flex flex-col basis-1/4 ">
             <h1 className="font-medium mb-1.5">Categories</h1>
             <span className="text-slate-600 text-sm">
-              <Link to="/products/1">Home</Link>
+              <Link to={`/products/${category[0].title}`}>Home</Link>
             </span>
             <span className="text-slate-600 text-sm">
-              <Link to="/products/2">Hygiene / Skincare</Link>
+              <Link to={`/products/${category[5].title}`}>
+                Hygiene / Skincare
+              </Link>
             </span>
             <span className="text-slate-600 text-sm">
-              <Link to="/products/3">Makeup</Link>
+              <Link to={`/products/${category[2].title}`}>Makeup</Link>
             </span>
             <span className="text-slate-600 text-sm">
-              <Link to="/products/4">Fashion</Link>
+              <Link to={`/products/${category[3].title}`}>Fashion</Link>
             </span>
             <span className="text-slate-600 text-sm">
-              <Link to="/products/5">Tote Bags</Link>
+              <Link to={`/products/${category[1].title}`}>Tote Bags</Link>
             </span>
             <span className="text-slate-600 text-sm">
-              <Link to="/products/6">Gardening</Link>
+              <Link to={`/products/${category[4].title}`}>Gardening</Link>
             </span>
           </div>
           <div className="links  hidden md:flex flex-col basis-1/4">

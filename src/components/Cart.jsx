@@ -23,11 +23,7 @@ export default function Cart() {
         <div>
           <div className="flex flex-row mb-7 gap-5 items-center" key={item.id}>
             <div className="left flex basis-1/5">
-              <img
-                src={process.env.REACT_APP_UPLOAD_URL + item.img}
-                alt=""
-                className="w-20 h-24 object-cover"
-              />
+              <img src={item.img} alt="" className="w-20 h-24 object-cover" />
             </div>
 
             <div className="flex flex-col ">

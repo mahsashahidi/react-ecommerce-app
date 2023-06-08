@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card.jsx";
-import useFetch from "../customHooks/useFetch.jsx";
+import { dataList } from "../data.js";
 
 export default function FeaturedProducts({ type }) {
-  const { data, loading, error } = useFetch(
-    `/products?populate=*&[filters][type][$eq]=${type}`
-  );
+  // const { data, loading, error } = useFetch(
+  //   `/products?populate=*&[filters][type][$eq]=${type}`
+  // );
   return (
     <div className="FeaturedProducts my-20 mx-10 text-left">
       <div className="top flex flex-col md:flex-row gap-7 md:gap-16 items-center mx-1 md:mx-12 mb-10">
@@ -15,13 +15,9 @@ export default function FeaturedProducts({ type }) {
         </p>
       </div>
       <div className="bottom flex flex-row flex-wrap justify-center gap-12">
-        {error
-          ? "oops"
-          : loading
-          ? "loading"
-          : data
-              ?.slice(0, 10)
-              .map((item) => <Card item={item} key={item.id} />)}
+        {dataList?.slice(0, 10).map((item) => (
+          <Card item={item} key={item.id} />
+        ))}
       </div>
     </div>
   );
